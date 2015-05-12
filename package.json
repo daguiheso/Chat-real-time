@@ -1,0 +1,19 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "A realtime chat witch video and gifs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daguiheso/Chat-real-time.git"
+  },
+  "author": "Daniel Hernandez Sotelo <danielhernandez@hotmail.com>",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/daguiheso/Chat-real-time/issues"
+  },
+  "homepage": "https://github.com/daguiheso/Chat-real-time#readme"
+}
