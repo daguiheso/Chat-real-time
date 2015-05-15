@@ -2,6 +2,7 @@
 
 const http = require('http') 			
 const fs = require('fs') // module file system
+const path = require('path') // manejo de rutas en diferentes SO
 const port = process.env.PORT || 8080  
 
 /*
@@ -19,8 +20,17 @@ server.on('listening', onListening)
 server.listen(port)
 
 function onRequest (req, res) {
-	let file = fs.readFileSync('public/index.html') // cargando archivo con metodo sincrono - no recomendado
-	res.end(file)
+	/*
+		concatenando dirname que es el directorio actual donde se esta ejecutando la app 
+		y hacemos join con el directorio public y con index.html
+	*/
+	let index = path.join(__dirname, 'public', 'index.html') 
+	fs.readFile(index, function (err, file) {   // cargando archivo forma asyncrona, con callback como  ultimo argumento
+		if (err) return res.end(err.message)
+
+		res.setHeader('Content-Type', 'text/html') // definiendo la cabecera o tipo de datos del archivo que estamos sirviendo
+		res.end(file)
+	}) 
 }
 
 function onListening () {
