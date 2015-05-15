@@ -5,10 +5,8 @@ const fs = require('fs') // module file system
 const path = require('path') // manejo de rutas en diferentes SO
 const port = process.env.PORT || 8080  
 
-/*
-	Server aparte de recibir un callback, tambien es un event emmiter, osea yo puedo ver el servidor como una instancia
-	de event emmiter
-*/
+/*	Server aparte de recibir un callback, tambien es un event emmiter, osea yo puedo ver el servidor como una instancia
+	de event emmiter  */
 
 const server = http.createServer()
 
@@ -20,17 +18,23 @@ server.on('listening', onListening)
 server.listen(port)
 
 function onRequest (req, res) {
-	/*
-		concatenando dirname que es el directorio actual donde se esta ejecutando la app 
-		y hacemos join con el directorio public y con index.html
-	*/
+/*  concatenando dirname que es el directorio actual donde se esta ejecutando la app 
+	y hacemos join con el directorio public y con index.html  */
 	let index = path.join(__dirname, 'public', 'index.html') 
-	fs.readFile(index, function (err, file) {   // cargando archivo forma asyncrona, con callback como  ultimo argumento
-		if (err) return res.end(err.message)
 
-		res.setHeader('Content-Type', 'text/html') // definiendo la cabecera o tipo de datos del archivo que estamos sirviendo
-		res.end(file)
-	}) 
+	/* creando readStream de lectura a partir de la clase de fileSystem*/
+	let rs = fs.createReadStream(index) 
+
+	/* seteando el header de la peticion*/
+	res.setHeader('Content-Type', 'text/html')
+	/* leyendo stream utilizando el metodo llamado pipe  */
+	rs.pipe(res)
+
+	/* un strwam como es un event emitter, tiene el metodo error */
+	rs.on('error', function (err) {
+		res.setHeader('Content-Type', 'text/plain')
+		res.end(err.message)
+	})
 }
 
 function onListening () {
