@@ -1,6 +1,7 @@
 'use strict'
 
 const http = require('http') 			
+const fs = require('fs') // module file system
 const port = process.env.PORT || 8080  
 
 /*
@@ -18,7 +19,8 @@ server.on('listening', onListening)
 server.listen(port)
 
 function onRequest (req, res) {
-	res.end("Hola io.js")
+	let file = fs.readFileSync('public/index.html') // cargando archivo con metodo sincrono - no recomendado
+	res.end(file)
 }
 
 function onListening () {
