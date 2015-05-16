@@ -18,6 +18,24 @@ server.on('listening', onListening)
 server.listen(port)
 
 function onRequest (req, res) {
+	/* Verficar url */
+	let uri = req.url
+
+	/* si URL comienza con /index o si es la ruta raiz */
+	if(uri.startsWith('/index') || uri === '/') {
+		return serveIndex(res)
+	}
+
+	if(uri === '/app.js') {
+		return serveApp(res)	
+	}
+
+	/* Si no es ninguna de las anteriores */
+	res.statusCode = 404
+	res.end(`404 not found: ${uri}`)
+}
+/* Recibe como argumento res porque es la respuesta que se va a enviar */
+function serveIndex (res) {
 /*  concatenando dirname que es el directorio actual donde se esta ejecutando la app 
 	y hacemos join con el directorio public y con index.html  */
 	let index = path.join(__dirname, 'public', 'index.html') 
@@ -31,6 +49,19 @@ function onRequest (req, res) {
 	rs.pipe(res)
 
 	/* un strwam como es un event emitter, tiene el metodo error */
+	rs.on('error', function (err) {
+		res.setHeader('Content-Type', 'text/plain')
+		res.end(err.message)
+	})
+}
+
+function serveApp (res) {
+	let app= path.join(__dirname, 'public', 'app.js') 
+	let rs = fs.createReadStream(app) 
+
+	res.setHeader('Content-Type', 'text/javascript')
+	rs.pipe(res)
+
 	rs.on('error', function (err) {
 		res.setHeader('Content-Type', 'text/plain')
 		res.end(err.message)
