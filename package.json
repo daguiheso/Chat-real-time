@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/daguiheso/Chat-real-time/issues"
   },
-  "homepage": "https://github.com/daguiheso/Chat-real-time#readme"
+  "homepage": "https://github.com/daguiheso/Chat-real-time#readme",
+  "dependencies": {
+    "st": "^0.5.3"
+  }
 }
