@@ -38,5 +38,5 @@ function onRequest (req, res) {
 }
 
 function onListening () {
-	console.log('Servidor escuchando en el puesto: ' + port)
+	console.log(`Servidor escuchando en el puesto: ${port}`)
 }
