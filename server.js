@@ -5,7 +5,7 @@ const router = require('./router') // el router es el index.js de la carpeta rou
 
 
 const server = http.createServer()
-const port = process.env.PORT || 8080  
+const port = process.env.PORT || 8081  
 
 // cada vez que se ejecuta el evento request, se ejecuta el router
 server.on('request', router)
